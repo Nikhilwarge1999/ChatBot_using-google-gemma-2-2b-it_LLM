@@ -22,7 +22,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-st.title("🧠 Mental Health Chatbot")
+st.title("🧠 Health Chatbot")
 
 # Initialize chat history
 if "messages" not in st.session_state:

@@ -1,4 +1,5 @@
-🌿 ***AI-Powered Health Chatbot*** 🤖 \n
+🌿 ***AI-Powered Health Chatbot*** 🤖 
+
 🚀 A Generative AI-based chatbot for mental health support, built with google/gemma-2-2b-it, Hugging Face API, and Streamlit.
 
 🔹 Project Overview

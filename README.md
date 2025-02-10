@@ -75,7 +75,7 @@ This project is open-source under the **MIT License**. Feel free to use, modify,
 
 ---  
 ## **🙌 Contributors**  
-👤 **Your Name** – Developer  
+👤 **Nikhil Anil   Warge** – Developer  
 💬 Feel free to **open issues** or **submit pull requests**!  
 
 🔗 **GitHub Repo:**    https://github.com/Nikhilwarge1999/ChatBot_using-google-gemma-2-2b-it_LLM

@@ -1,8 +1,0 @@
-# Ignore .env file
-.env
-
-# Ignore __pycache__ files
-__pycache__/
-
-# Ignore Streamlit cache (optional)
-.streamlit/

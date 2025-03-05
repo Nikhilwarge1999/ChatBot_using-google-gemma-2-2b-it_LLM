@@ -1,6 +1,17 @@
 import streamlit as st
 from model_load import get_response
 
+st.markdown(
+    """
+    <head>
+        <link rel="icon" href="https://raw.githubusercontent.com/Nikhilwarge1999/ChatBot_using-google-gemma-2-2b-it_LLM/main/Untitled%20design%20(2).png" type="image/png">
+        <meta name="apple-mobile-web-app-title" content="MH_Bot">
+    </head>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # Page Configuration
 st.set_page_config(page_title="AI Mental Helth Bot", page_icon="🧠", layout="centered")
 

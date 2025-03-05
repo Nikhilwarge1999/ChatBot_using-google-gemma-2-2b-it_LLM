@@ -2,7 +2,7 @@ import streamlit as st
 from model_load import get_response
 
 # Page Configuration
-st.set_page_config(page_title="AI Chatbot", page_icon="🤖", layout="centered")
+st.set_page_config(page_title="AI Mental Helth Bot", page_icon="🧠", layout="centered")
 
 # Custom CSS for styling
 st.markdown("""
@@ -13,7 +13,7 @@ st.markdown("""
         .main {
             background: url("https://images.unsplash.com/photo-1521747116042-5a810fda9664") no-repeat center center fixed;
             background-size: cover;
-            color: white;
+            color: black;
         }
         .chat-container {
             max-width: 600px;

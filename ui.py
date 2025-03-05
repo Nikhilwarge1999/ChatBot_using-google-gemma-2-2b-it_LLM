@@ -1,29 +1,38 @@
 import streamlit as st
 from model_load import get_response
 
+# Page Configuration
+st.set_page_config(
+    page_title="AI Chatbot", 
+    page_icon="🤖", 
+    layout="centered"
+)
+
+# Custom HTML for the icon and name
 st.markdown(
     """
     <head>
         <link rel="icon" href="https://raw.githubusercontent.com/Nikhilwarge1999/ChatBot_using-google-gemma-2-2b-it_LLM/main/Untitled%20design%20(2).png" type="image/png">
-        <meta name="apple-mobile-web-app-title" content="MH_Bot">
+        <meta name="apple-mobile-web-app-title" content="AI Chatbot">
     </head>
     """,
     unsafe_allow_html=True
 )
-
-
-# Page Configuration
-st.set_page_config(page_title="AI Mental Helth Bot", page_icon="🧠", layout="centered")
 
 # Custom CSS for styling
 st.markdown("""
     <style>
         body {
             background-color: #141414;
+            background-image: url("https://images.unsplash.com/photo-1521747116042-5a810fda9664");
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
         }
         .main {
-            background: url("https://images.unsplash.com/photo-1521747116042-5a810fda9664") no-repeat center center fixed;
-            background-size: cover;
+            background: transparent;
             color: black;
         }
         .chat-container {
@@ -105,10 +114,4 @@ if user_input:
             response = "⚠️ I'm having trouble responding. Please try again later."
 
     # Append bot response
-    st.session_state.messages.append({"role": "assistant", "content": response})
-    st.markdown(f'''
-        <div class="message-container">
-            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712031.png" class="avatar">
-            <div class="bot-message">{response}</div>
-        </div>
-    ''', unsafe_allow_html=True)
+ 

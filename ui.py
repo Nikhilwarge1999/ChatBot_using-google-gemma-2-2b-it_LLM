@@ -2,22 +2,8 @@ import streamlit as st
 from model_load import get_response
 
 # Page Configuration
-st.set_page_config(
-    page_title="AI Chatbot", 
-    page_icon="🤖", 
-    layout="centered"
-)
+st.set_page_config(page_title="Mental Health AI Chatbot", page_icon="🤖", layout="centered")
 
-# Custom HTML for the icon and name
-st.markdown(
-    """
-    <head>
-        <link rel="icon" href="https://raw.githubusercontent.com/Nikhilwarge1999/ChatBot_using-google-gemma-2-2b-it_LLM/main/Untitled%20design%20(2).png" type="image/png">
-        <meta name="apple-mobile-web-app-title" content="AI Chatbot">
-    </head>
-    """,
-    unsafe_allow_html=True
-)
 
 # Custom CSS for styling
 st.markdown("""
@@ -78,7 +64,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Chatbot UI
-st.markdown('<div class="header">🤖 AI Chat Assistant</div>', unsafe_allow_html=True)
+st.markdown('<div class="header">🧠 Mental Health AI Bot</div>', unsafe_allow_html=True)
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -114,4 +100,10 @@ if user_input:
             response = "⚠️ I'm having trouble responding. Please try again later."
 
     # Append bot response
- 
+    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.markdown(f'''
+        <div class="message-container">
+            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712031.png" class="avatar">
+            <div class="bot-message">{response}</div>
+        </div>
+    ''', unsafe_allow_html=True)

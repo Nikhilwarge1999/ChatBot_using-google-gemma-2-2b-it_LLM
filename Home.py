@@ -71,7 +71,7 @@ st.markdown("""
 # Centered Start Button
 st.markdown('<div class="center-button">', unsafe_allow_html=True)
 if st.button("🟢 Start Chat"):
-    st.switch_page("pages\\ui.py")
+    st.switch_page("pages/ui.py")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Divider and Team Section

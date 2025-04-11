@@ -1,109 +1,120 @@
 import streamlit as st
+import time
 from model_load import get_response
+import streamlit.components.v1 as components
 
-# Page Configuration
-st.set_page_config(page_title="Mental Health AI Chatbot", page_icon="🤖", layout="centered")
+st.set_page_config(layout="wide")
+# st.title("🧠 Mental Health Chatbot UI")
 
-
-# Custom CSS for styling
+# Inject Custom CSS
 st.markdown("""
     <style>
-        body {
-            background-color: #141414;
-            background-image: url("https://images.unsplash.com/photo-1521747116042-5a810fda9664");
-            background-size: cover;
-            background-position: center;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-        }
-        .main {
-            background: transparent;
-            color: black;
-        }
-        .chat-container {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-        }
-        .user-message {
-            text-align: right;
-            background-color: #89d9f2;
-            padding: 12px;
-            border-radius: 20px;
-            max-width: 70%;
-            margin-left: auto;
-            color: black;
-        }
-        .bot-message {
-            text-align: left;
-            background-color: #232323;
-            padding: 12px;
-            border-radius: 20px;
-            max-width: 70%;
-            color: white;
-        }
-        .message-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-        .header {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            padding: 10px;
-        }
+    .chat-container {
+        height: 0vh;
+        overflow-y: auto;
+        padding-right: 10px;
+        margin-bottom: 1rem;
+    }
+    .user-message {
+        text-align: right;
+        background-color: #b4f283;
+        padding: 12px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        max-width: 70%;
+        width: fit-content;
+        margin-left: auto;
+        color: black;
+    }
+    .bot-message {
+        text-align: left;
+        background-color: #2f3030;
+        color: white;
+        width: fit-content;
+        padding: 12px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        max-width: 70%;
+    }
     </style>
 """, unsafe_allow_html=True)
 
-# Chatbot UI
-st.markdown('<div class="header">🧠 Mental Health AI Bot</div>', unsafe_allow_html=True)
 
-# Initialize chat history
-if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {"role": "assistant", "content": "Hello! 😊 I'm your AI assistant. How can I help you today?"}
-    ]
+# Split into Streamlit columns (30%-70%)
+col1, col2 = st.columns([4, 6], gap="large")
 
-# Display chat history
-for msg in st.session_state.messages:
-    if msg["role"] == "user":
-        st.markdown(f'<div class="message-container"><div class="user-message">{msg["content"]}</div></div>', unsafe_allow_html=True)
-    else:
-        st.markdown(f'''
-            <div class="message-container">
-                <img src="https://cdn-icons-png.flaticon.com/512/4712/4712031.png" class="avatar">
-                <div class="bot-message">{msg["content"]}</div>
-            </div>
-        ''', unsafe_allow_html=True)
+# ---------------- LEFT PANEL (Fixed) ---------------- #
+with col1:
+    # st.subheader("Mental Health Chatbot")
+    
+    st.markdown("""
+        <div style="height: 50vh; overflow: hidden; background-color: #f5f5f5;
+                    border-radius: 10px; padding: 15px; border: 2px solid #ddd;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);">
+            <ul>
+                <li>🔐 Private & Anonymous</li>
+                <li>💡 Mental health tips</li>
+                <li>📘 Resource links</li>
+                <li>🌍 Multi-Language Support</li>
+                <li>🧘 Relaxation Exercises</li>
+            </ul>
+        </div>
+    """, unsafe_allow_html=True)
 
-# User input
+# ---------------- RIGHT PANEL (Chat UI) ---------------- #
+with col2:
+    st.markdown("### Meantal Health AI Bot 🤖")
+    st.markdown('<div class="chat-container" id="chat-box">', unsafe_allow_html=True)
+
+    if "messages" not in st.session_state:
+        st.session_state.messages = [
+            {"role": "assistant", "content": "Hello! 😊 I'm your AI assistant. How can I help you today?"}
+        ]
+
+    for i, msg in enumerate(st.session_state.messages):
+        if msg["role"] == "user":
+            st.markdown(f'<div class="user-message">{msg["content"]}</div>', unsafe_allow_html=True)
+        else:
+            if i == len(st.session_state.messages) - 1 and "just_added" in msg:
+                placeholder = st.empty()
+                typed = ""
+                for ch in msg["content"]:
+                    typed += ch
+                    placeholder.markdown(f'<div class="bot-message">{typed}</div>', unsafe_allow_html=True)
+                    time.sleep(0.02)
+            else:
+                st.markdown(f'<div class="bot-message">{msg["content"]}</div>', unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # Auto-scroll to latest
+    components.html("""
+        <script>
+        const chatBox = window.parent.document.querySelector("#chat-box");
+        if (chatBox) {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+        </script>
+    """, height=0)
+
+# Input box fixed at bottom of the window
 user_input = st.chat_input("Type your message...")
 
 if user_input:
-    # Append user input
     st.session_state.messages.append({"role": "user", "content": user_input})
-    st.markdown(f'<div class="message-container"><div class="user-message">{user_input}</div></div>', unsafe_allow_html=True)
 
-    # Get AI response
     with st.chat_message("assistant"):
-        try:
-            response = get_response(user_input)
-        except Exception as e:
-            response = "⚠️ I'm having trouble responding. Please try again later."
+        placeholder = st.empty()
+        for i in range(3):
+            placeholder.markdown("🤖 Bot is typing" + "." * (i + 1))
+            time.sleep(0.4)
 
-    # Append bot response
-    st.session_state.messages.append({"role": "assistant", "content": response})
-    st.markdown(f'''
-        <div class="message-container">
-            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712031.png" class="avatar">
-            <div class="bot-message">{response}</div>
-        </div>
-    ''', unsafe_allow_html=True)
+    response = get_response(user_input)
+
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": response,
+        "just_added": True
+    })
+
+    st.rerun()

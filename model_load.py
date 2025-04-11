@@ -1,10 +1,12 @@
 import os
 from huggingface_hub import InferenceClient
 from dotenv import load_dotenv
+import streamlit as st
+
 
 # Load API key from .env file
 load_dotenv()
-API_KEY = os.getenv("HF_API_KEY")
+API_KEY = st.secrets("HF_API_KEY")
 
 # Initialize Hugging Face Inference Client
 client = InferenceClient(api_key=API_KEY)
